@@ -348,12 +348,18 @@ public class CardStackLayoutManager
                 updateScale(child, currentIndex);
                 resetRotation(child);
                 resetOverlay(child);
+                kuyOverlay(child);
             }
         }
 
         if (state.status.isDragging()) {
             listener.onCardDragging(state.getDirection(), state.getRatio());
         }
+    }
+
+    private void kuyOverlay(View view){
+        View overlay = view.findViewById(R.id.top_overlay);
+        overlay.setAlpha(1.0f);
     }
 
     private void updateTranslation(View view) {

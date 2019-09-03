@@ -138,21 +138,21 @@ class MainActivity : AppCompatActivity(), CardStackListener {
 
     private fun initialize() {
         manager.setStackFrom(StackFrom.None)
-        manager.setVisibleCount(3)
+        manager.setVisibleCount(2)
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
         manager.setSwipeThreshold(0.3f)
         manager.setMaxDegree(20.0f)
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
-        manager.setCanScrollVertical(true)
+        manager.setCanScrollVertical(false)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         cardStackView.layoutManager = manager
         cardStackView.adapter = adapter
         cardStackView.itemAnimator.apply {
             if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
+                supportsChangeAnimations = true
             }
         }
     }
