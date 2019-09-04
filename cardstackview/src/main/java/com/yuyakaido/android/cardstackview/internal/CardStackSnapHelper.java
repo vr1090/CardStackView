@@ -29,9 +29,16 @@ public class CardStackSnapHelper extends SnapHelper {
                 int y = (int) targetView.getTranslationY();
                 if (x != 0 || y != 0) {
                     CardStackSetting setting = manager.getCardStackSetting();
+                    // get translation
+                    // di abs
                     float horizontal = Math.abs(x) / (float) targetView.getWidth();
                     float vertical = Math.abs(y) / (float) targetView.getHeight();
+
+                    //get duration
+                    //using duration
+                    // kasih speed
                     Duration duration = Duration.fromVelocity(velocityY < velocityX ? velocityX : velocityY);
+
                     if (duration == Duration.Fast || setting.swipeThreshold < horizontal || setting.swipeThreshold < vertical) {
                         CardStackState state = manager.getCardStackState();
                         if (setting.directions.contains(state.getDirection())) {
@@ -47,7 +54,10 @@ public class CardStackSnapHelper extends SnapHelper {
                             this.velocityX = 0;
                             this.velocityY = 0;
 
+                            //kasih scroller..
                             CardStackSmoothScroller scroller = new CardStackSmoothScroller(CardStackSmoothScroller.ScrollType.ManualSwipe, manager);
+
+                            // kunci target dimana gitu
                             scroller.setTargetPosition(manager.getTopPosition());
                             manager.startSmoothScroll(scroller);
                         } else {

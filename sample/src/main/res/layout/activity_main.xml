@@ -19,7 +19,9 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:title="coba2 swipey.."
+                >
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -77,15 +79,33 @@
                     app:rippleColor="#226FE2B3"/>
 
             </RelativeLayout>
-
-            <com.yuyakaido.android.cardstackview.CardStackView
-                android:id="@+id/card_stack_view"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/button_container"
-                android:padding="4dp"
-                android:clipToPadding="false">
-            </com.yuyakaido.android.cardstackview.CardStackView>
+                >
+
+                <com.yuyakaido.android.cardstackview.CardStackView
+                    android:id="@+id/card_stack_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:padding="4dp"
+                    android:clipToPadding="false">
+                </com.yuyakaido.android.cardstackview.CardStackView>
+
+                <TextView
+                    android:id="@+id/text_elaborate"
+                    android:alpha="0.0"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
+
+            </FrameLayout>
 
         </RelativeLayout>
 

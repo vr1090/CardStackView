@@ -23,7 +23,10 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    private val adapter by lazy { CardStackAdapter(createSpots()) }
+    private val spots by lazy {createSpots()}
+    private val textElaborate by lazy{ findViewById<TextView>(R.id.text_elaborate)}
+    private val adapter by lazy { CardStackAdapter(spots) }
+    private var currentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,13 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardDragging(direction: Direction, ratio: Float) {
+        val alpha = if( ratio < 0.3f) ratio/0.3f else 1.0f
+        textElaborate.alpha = alpha
+        logging("dragging to position.. ${manager.topPosition}")
+        val spot = adapter.getSpots()[manager.topPosition]
+        textElaborate.text = if(direction == Direction.Left) spot.kiri else spot.kanan
         Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
+        logging("dragging $ratio")
     }
 
     override fun onCardSwiped(direction: Direction) {
@@ -50,23 +59,36 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         if (manager.topPosition == adapter.itemCount - 5) {
             paginate()
         }
+        logging("swipped $direction ${manager.topPosition}")
+    }
+
+    private fun logging(text:String){
+        Log.e("ketai", text)
     }
 
     override fun onCardRewound() {
         Log.d("CardStackView", "onCardRewound: ${manager.topPosition}")
+        logging("rewound.. apa ini?")
     }
 
+    //abis nge drag, terus di cancel
     override fun onCardCanceled() {
+        textElaborate.alpha = 0.0f
+        logging("canceled")
         Log.d("CardStackView", "onCardCanceled: ${manager.topPosition}")
     }
 
     override fun onCardAppeared(view: View, position: Int) {
         val textView = view.findViewById<TextView>(R.id.item_name)
+        currentPosition = position
+        logging("appeared $position")
         Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}")
+        textElaborate.alpha = 0.0f
     }
 
     override fun onCardDisappeared(view: View, position: Int) {
         val textView = view.findViewById<TextView>(R.id.item_name)
+        logging("disssapeard $position")
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
     }
 
@@ -142,7 +164,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
         manager.setSwipeThreshold(0.3f)
-        manager.setMaxDegree(20.0f)
+        manager.setMaxDegree(35.0f)
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(false)
